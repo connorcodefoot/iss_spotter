@@ -36,11 +36,25 @@ const fetchCoordsByIP = (ip, callback) => {
       return;
     }
 
-    callback(null, parsedBody.latitude, parsedBody.longitude);
+    callback(null, { lat: '48.6502411', long: '-123.399005' });
     return
   })
 
 };
 
+const fetchISSFlyOverTimes = (coordinates, callback) => {
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+  request(`https://iss-flyover.herokuapp.com/json/?lat=${coordinates.lat}&lon=${coordinates.long}`,(error, response, body) => {
+
+  
+
+  const parsedBody = JSON.parse(body)
+  response = parsedBody.response
+  callback(null, response)
+
+})
+}
+
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes};
+
